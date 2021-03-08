@@ -11,7 +11,7 @@ exports.up = async function(knex) {
         table.text("resource_name")
         table.string("resource_description")
     })
-    await knex.schema.creatTable("tasks",(table)=>{
+    await knex.schema.createTable("tasks",(table)=>{
         table.increments("task_id")
         table.string("task_description").notNull()
         table.string("task_notes")
@@ -20,12 +20,14 @@ exports.up = async function(knex) {
     })
     await knex.schema.createTable("project_resources",(table)=>{
         table.integer("project_id").notNull().references("id").inTable("projects")
-        table.integer("resources").notNull().references("id").inTable("resources")
-        
-
+        table.integer("resources_id").notNull().references("id").inTable("resources")
+        table.primary(["project_id","resources_id"])
     })
 };
 
 exports.down = async function(knex) {
-  
+  await knex.schema.dropTableIfExists("project_resources")
+  await knex.schema.dropTableIfExists("task")
+  await knex.schema.dropTableIfExists("resources")
+  await knex.schema.dropTableIfExists("projects")
 };
