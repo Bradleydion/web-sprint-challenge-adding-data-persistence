@@ -9,9 +9,9 @@ const server = express()
 server.use(helmet())
 server.use(express.json())
 
-server.use('/api/projects', ProjectRouter);
-server.use('/api/tasks', TaskRouter);
-server.use('/api/resources', ResourceRouter);
+server.use( ProjectRouter);
+server.use(TaskRouter);
+server.use(ResourceRouter);
 
 
 server.use((req,res,next)=>{
